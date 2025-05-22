@@ -18,7 +18,7 @@ export default function Home(){
                 <div className="w-[35%] flex flex-col items-start ml-16 my-10 h-full">
                     <span className="text-sm pt-10">Fresh 100% Organic</span>
                     <div className='text-3xl font-bold'>Fresh &  Healthy Organic Food</div>
-                    <span className='text-sm'>Eggsy — Freshness at Your Doorstep, Straight from the Farm!"</span>
+                    <span className='text-sm'>Eggsy — Freshness at Your Doorstep, Straight from the Farm!gi</span>
                     <button>Shop now</button>
                 </div>
                 <div className="w-[55%] mr-16 px-26 flex items-center justify-center  my-10 h-full">
