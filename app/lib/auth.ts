@@ -3,7 +3,6 @@ import type { NextAuthOptions } from "next-auth";
 import { Users } from "./models/user";
 import { connectToDB } from "./db";
 import bcrypt from "bcryptjs";
-import { User } from "lucide-react";
 
 export const NEXT_AUTH_CONFIG: NextAuthOptions = {
 providers:[

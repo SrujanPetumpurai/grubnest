@@ -4,7 +4,7 @@ export async function GET(){
     await connectToDB();
     try{
     const items = await Reviews.aggregate([
-        { $match: { rating: 5 } }, // Find reviews with 5-star ratings
+        { $match: { rating: 5 } }, 
         {
           $lookup: {
             from: 'items',
@@ -13,13 +13,13 @@ export async function GET(){
             as: 'itemDetails'
           }
         },
-        { $unwind: '$itemDetails' }, // Flatten the result
+        { $unwind: '$itemDetails' },
         { $replaceRoot: { newRoot: '$itemDetails' } }
       ]);
       return Response.json(items,{status:200})
     }
     catch(e){
-        throw new Error('unable to fetch top rated items')
+      console.log('unable to fetch top rated items',e)
     }
       
 }

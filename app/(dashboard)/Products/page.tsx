@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ItemCard from '@/app/components/ItemCard';
-import SelectCategory from '@/app/components/SelectCategory';
 import { useRouter } from 'next/navigation';
 
 type Item = {
@@ -17,7 +16,6 @@ type Item = {
 export default function Products() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
-  const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -39,7 +37,7 @@ export default function Products() {
         <h1 className="font-semibold text-lg">Search Results for: {query}</h1>
         <div className="flex flex-wrap">
           {items.length > 0 ? (
-            items.map((item, index) => (
+            items.map((item, _) => (
               <div className="w-1/3" key={item._id}>
                 <ItemCard name={item.name} img={item.image} cost={item.cost} itemId={item._id} />
               </div>

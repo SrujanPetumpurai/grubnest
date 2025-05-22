@@ -68,8 +68,8 @@ export default function ProductDetails() {
         <div className="flex mt-26 mx-auto w-[1100px] ">
             <div className="flex sticky top-25 h-[540px]">
            <div className="flex flex-col w-25 items-center">
-           {Array.from({length:2}).map(()=>
-           <ItemSmallImg id={item._id}></ItemSmallImg>
+           {Array.from({length:2}).map((_,i)=>
+           <ItemSmallImg key={i} id={item._id}></ItemSmallImg>
             )}
            </div>
            <div> 

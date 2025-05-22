@@ -1,7 +1,6 @@
 import './page.css'
 import Link from 'next/link'
 import Image from  'next/image'
-import organicFood from '@/public/What is Protein_.jpg'
 import foodbasket from '@/public/foodbasket.png'
 import Offers from '@/app/components/Offers'
 import C_Card from '@/app/components/CategoryCard'

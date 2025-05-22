@@ -6,7 +6,6 @@ import CartItem from '@/app/components/cartItem';
   const { data: session } = useSession();
   const [cart, setCart] = useState<any>(null);
   const [fullCart,setFullCart]=useState<any>(null);
-  const [payment,setPayment]= useState();
 
   
   useEffect(() => {
@@ -25,8 +24,8 @@ import CartItem from '@/app/components/cartItem';
 
   if (!session) return <p>Please log in to view your cart.</p>;
   if (!cart) return <p>Loading cart...</p>;
-  let completePrice = fullCart.totalPrice +8.90+30;
-  let totalItems = cart.length;
+  const completePrice = fullCart.totalPrice +8.90+30;
+  const totalItems = cart.length;
 
   return (
     <div>
@@ -40,9 +39,9 @@ import CartItem from '@/app/components/cartItem';
 
         <ul>
 
-         {cart.map((item:any)=>(
+         {cart.map((item:any,idx:number)=>(
           <li> 
-            <CartItem name={item.name} itemId={item.itemId} quantity={item.quantity} img={item.image} price={item.cost}></CartItem>
+            <CartItem key={idx} name={item.name} itemId={item.itemId} quantity={item.quantity} img={item.image} price={item.cost}></CartItem>
              </li>
          ))}
         </ul>
@@ -86,7 +85,7 @@ import CartItem from '@/app/components/cartItem';
          </div>
         </div>
       )}
-      <div onClick={paymentReq} className='fixed w-[900px] bg-green-600 text-lg text-center pt-3 rounded-xl text-white h-[55px] bottom-4 mx-auto left-1/2 -translate-x-1/2'>
+      <div  className='fixed w-[900px] bg-green-600 text-lg text-center pt-3 rounded-xl text-white h-[55px] bottom-4 mx-auto left-1/2 -translate-x-1/2'>
         Proceed to Pay
       </div>
     </div>
