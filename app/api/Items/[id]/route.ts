@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/app/lib/db";
 import { Items } from "@/app/lib/models/user";
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request,context: { params: { id: string } }) {
     try {
-        const {id} =  params
+        const {id} =  context.params
        await connectToDB();
         const item = await Items.findOne({ _id: id });
         console.log(id, "this is params.i.d")
