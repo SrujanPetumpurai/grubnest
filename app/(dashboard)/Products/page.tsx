@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ItemCard from '@/app/components/ItemCard';
-import { useRouter } from 'next/navigation';
 
 type Item = {
   _id: string;
