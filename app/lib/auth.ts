@@ -9,14 +9,15 @@ providers:[
     CredentialsProvider({
         name:"Credentials",
         credentials:{
-            username:{label:'email',type:'text',placeholder:''},
+            email:{label:'email',type:'text',placeholder:''},
             password:{label:'password',type:'password',placeholder:''},
         },
         async authorize(credentials:any){
             console.log(credentials)
-          connectToDB();
+            console.log("Hello in authorize function ")
+          await connectToDB();
             let user = await Users.findOne({
-               email:credentials.username,
+               email:credentials.email,
             })
             if (!user) {
                 console.log("User not found");
@@ -42,11 +43,8 @@ callbacks: {
             session.user.id = token.uid
         }        return session;
     },
-    redirect: async ({ url, baseUrl,token }:any) => {
-        if(token?.uid){
-            return `${baseUrl}/order/${token.uid}`;
-        }else
-        return `${baseUrl}/spaceJam`
+    redirect: async ({ url, baseUrl}:any) => {
+        return `${baseUrl}/Home`
         
     },
 },

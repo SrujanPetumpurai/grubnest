@@ -1,14 +1,14 @@
 import { StaticImageData } from "next/image";
 
-export default function CategoryCard({name,img}:{name:string,img:string | StaticImageData}){
+export default function CategoryCard({name,img,bgColor}:{bgColor:string,name:string,img:string | StaticImageData}){
 return(
-      <div className="flex flex-col justify-center items-center w-[90px] h-[70px]">
-        <div className="h-[70%]">
-        <img className="w-full h-[100%] mb-[5px] object-cover object-center" src={typeof img === 'string' ? img : img.src} alt="" />
-        </div>
-           <div className="w-full font-bold ">{name}</div>
-        </div>
-     
-    
+      <div className="flex w-[135px] h-[200px] flex-col">
+         <div className="w-full h-[130px] rounded-xl w-full" style={{backgroundColor:bgColor}}>
+            <img className="w-full h-full" src={`${img}`} alt="" />
+         </div>
+         <div className="w-full h-[30px] text-teal-900 font-semibold">
+            {name}
+         </div>
+      </div>
 )
 }

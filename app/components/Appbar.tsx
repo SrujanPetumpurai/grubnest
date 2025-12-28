@@ -1,11 +1,10 @@
 'use client';
 import { useSession, signOut, signIn } from 'next-auth/react';
-import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SelectCategory from './SelectCategory';
-import logo from '@/public/logo.png';
+import SearchBar from './SearchBar';
+import CategoryDropdown from './CategoryDropdown';
+import GetLocation from '@/app/components/GetLocation'
 
 type item = {
   name:string;
@@ -14,73 +13,62 @@ type item = {
   img:string;
 }
 export default function AppBar() {
-  const { data: session } = useSession();
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<item[]>([]);
   const router = useRouter();
-
-  const handleSearch = async (value:string) => {
-    setQuery(value);
-    if (value.trim()) {
-      const response = await fetch(`/api/search?query=${value}`);
-      const data = await response.json();
-      setSuggestions(data);
-    } else {
-      setSuggestions([]);
-    }
-  };
-  const handleClick = (selection:string)=>{
-    router.push(`/Products?query=${selection}`)
-  }
-
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (query.trim()) {
-      router.push(`/Products?query=${encodeURIComponent(query)}`);
-    }
-  };
-
+  
   return (
-    <div className="w-full sticky top-0 z-50 opacity-100  h-20 mt-2 bg-white text-black flex items-center justify-between  border-b shadow-md px-6">
+    <div className="w-[1200px] mx-auto sticky top-0 z-50 opacity-100  h-20 mt-2 bg-white text-black flex items-center justify-between  border-b shadow-sm px-6">
       <div className="h-26 mt-10 w-26">
-        <Image alt='logo of the company(eggsy)' src={logo} />
+        <Image  alt='logo of the company(eggsy)' width={104} height={104} src='/logo.png' />
       </div>
-      
-      <form onSubmit={handleSubmit} className="relative w-[50%] flex items-center">
-        
-        <input
-          type="text"
-          placeholder="Search for products or categories..."
-          value={query}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="w-full px-4 py-2 border rounded"
-        />
-        <button type="submit" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">Search</button>
-        {suggestions.length > 0 && (
-          <ul className="absolute bg-white border mt-1 w-full max-h-60 overflow-y-auto">
-            {suggestions.map((item, index) => (
-              <li key={index} className="px-4 py-2 hover:bg-gray-100">
-                {item.name} ({item.type})
-              </li>
-            ))}
-          </ul>
-        )}
-        
+      <div>
+        <CategoryDropdown></CategoryDropdown>
+      </div>
+       <div className='w-[500px] flex items-center h-[25px]'>
+                    <SearchBar></SearchBar>
+       </div>
        
-      </form>
-
-      <div className='flex flex-row w-[130px] justify-between'>
-        <div className='w-8 h-8'>
-          <Link href={'/cart'}>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.2998 5H22L20 12H8.37675M21 16H9L7 3H4M4 8H2M5 11H2M6 14H2M10 20C10 20.5523 9.55228 21 9 21C8.44772 21 8 20.5523 8 20C8 19.4477 8.44772 19 9 19C9.55228 19 10 19.4477 10 20ZM21 20C21 20.5523 20.5523 21 20 21C19.4477 21 19 20.5523 19 20C19 19.4477 19.4477 19 20 19C20.5523 19 21 19.4477 21 20Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-          </Link>
+        <div>
+          <GetLocation></GetLocation>
         </div>
-        {session ? (
-          <button onClick={() => signOut()} className="bg-red-500 px-4 py-2 rounded">Logout</button>
-        ) : (
-          <button onClick={() => signIn()} className="bg-blue-500 px-4 py-2 rounded">Sign In</button>
-        )}
-      </div>
+        <div>
+          <Signin></Signin>
+        </div>
+        <div onClick={()=>router.push('/cart')} className='w-[35px] h-[35px]'>
+                 <svg className='w-full h-full'
+                  fill="#000000"
+                  viewBox="0 0 902.86 902.86"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g>
+                    <path d="M671.504,577.829l110.485-432.609H902.86v-68H729.174L703.128,179.2L0,178.697l74.753,399.129h596.751V577.829z M685.766,247.188l-67.077,262.64H131.199L81.928,246.756L685.766,247.188z"></path>
+                    <path d="M578.418,825.641c59.961,0,108.743-48.783,108.743-108.744s-48.782-108.742-108.743-108.742H168.717 c-59.961,0-108.744,48.781-108.744,108.742s48.782,108.744,108.744,108.744c59.962,0,108.743-48.783,108.743-108.744 c0-14.4-2.821-28.152-7.927-40.742h208.069c-5.107,12.59-7.928,26.342-7.928,40.742 C469.675,776.858,518.457,825.641,578.418,825.641z M209.46,716.897c0,22.467-18.277,40.744-40.743,40.744 c-22.466,0-40.744-18.277-40.744-40.744c0-22.465,18.277-40.742,40.744-40.742C191.183,676.155,209.46,694.432,209.46,716.897z M619.162,716.897c0,22.467-18.277,40.744-40.743,40.744s-40.743-18.277-40.743-40.744c0-22.465,18.277-40.742,40.743-40.742 S619.162,694.432,619.162,716.897z"></path>
+                  </g>
+                 </svg>
+        </div>
     </div>
   );
 }
+
+function Signin() {
+  const { data: session,status } = useSession();
+  const router = useRouter()
+  if(status=='loading') return null
+  if (session)
+    return (
+      <button onClick={() => signOut()} className="pl-3 py-1 border rounded">
+        Sign out
+      </button>
+    );
+
+  return (
+    <div className='flex'>
+      <button onClick={() => signIn()} className="px-3 py-1 border rounded">
+        Sign in
+      </button>
+      <button onClick={()=>router.push('/Signup')}>
+        Singup
+      </button>
+    </div>
+  );
+}
+

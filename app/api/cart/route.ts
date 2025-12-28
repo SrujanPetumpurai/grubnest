@@ -1,72 +1,110 @@
 import { connectToDB } from "@/app/lib/db";
 import {Cart} from "@/app/lib/models/user"
 import { getServerSession } from "next-auth";
-import { NextRequest } from "next/server";
+import { NextRequest,NextResponse } from "next/server";
 import { NEXT_AUTH_CONFIG } from "@/app/lib/auth"; 
 
-
-export async function POST(req:NextRequest) {
-  await connectToDB();
+//Adding item into the cart && creating a new cart if cart doesn't exist
+export async function POST(req: NextRequest) {
   const session = await getServerSession(NEXT_AUTH_CONFIG);
-
-  if (!session || !session.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { itemId} = await req.json();
+  await connectToDB();
+  const { id, quantity } = await req.json();
   const userId = session.user.id;
 
-  if (!itemId) {
-    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
+  if (!id) {
+    return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  let cart = await Cart.findOne({ userId });
-
-  if (!cart) {
-    cart = new Cart({ userId, items: [] });
-  }
-
-  const existingItem = cart.items.find((item:any) => item.itemId.toString() === itemId);
-  
-  if (existingItem) {
-    existingItem.quantity += 1;
+  // remove item if quantity=0
+  if (quantity === 0) {
+    await Cart.updateOne({ userId }, { $pull: { items: { itemId: id } } });
   } else {
-    cart.items.push({ itemId, quantity:1 });
+    // add or update item quantity
+    await Cart.updateOne(
+      { userId, "items.itemId": id },
+      { $set: { "items.$.quantity": quantity } }
+    );
+
+    // if not present, push new item
+    await Cart.updateOne(
+      { userId, "items.itemId": { $ne: id } },
+      { $push: { items: { itemId: id, quantity } } },
+      { upsert: true }
+    );
   }
 
-  await cart.save();
-  return new Response(JSON.stringify({ message: "Item added to cart", cart }), { status: 200 });
+  const updated = await Cart.findOne({ userId }).populate("items.itemId");
+  return NextResponse.json({ message: "Item added to cart", cart: updated });
 }
 
+//Sending the user cart
 export async function GET(req:NextRequest) {
   await connectToDB();
   const session = await getServerSession( NEXT_AUTH_CONFIG );
 
   if (!session || !session.user) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const userId = session.user.id;
-  try{
-    const cart = await Cart.findOne({ userId }).populate('items.itemId');
+  var cart = await Cart.findOne({ userId }).populate('items.itemId');
+  if(!cart){
+    cart = await Cart.create({userId,items:[]})
+    return Response.json({message:'no items yet',items:[]},{status:200})
+  }
+  if(cart.items.length>0){
     const items = cart.items.map((item:{itemId:any,quantity:number})=>({
       name: item.itemId.name,
       image: item.itemId.image,
       cost: item.itemId.cost,
-      type: item.itemId.type,
+      category: item.itemId.category,
       quantity:item.quantity,
+      discount:item.itemId.discount,
       itemId:item.itemId._id
-  }));
+     }));
+    return Response.json({items})
+  }
+  else{
+    return Response.json({items:[]})
+  }
+  }
 
-    return Response.json({items,cart})
+//Delete Item
+export async function DELETE(req: NextRequest) {
+  await connectToDB();
+  const session = await getServerSession(NEXT_AUTH_CONFIG);
+
+  if (!session?.user) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
-  catch (error) {
-    if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
+
+  const userId = session.user.id;
+  const { itemId } = await req.json(); 
+
+  if (!itemId) {
+    return Response.json({ error: "Item ID required" }, { status: 400 });
+  }
+
+  try {
+    const updatedCart = await Cart.findOneAndUpdate(
+      { userId },
+      { $pull: { items: { itemId } } },
+      { new: true }
+    ).populate("items.itemId");
+
+    if (!updatedCart) {
+      return Response.json({ error: "Cart not found" }, { status: 404 });
     }
-    return new Response('An unknown error occurred', { status: 500 });
+
+    return Response.json({ message: "Item removed successfully", cart: updatedCart });
+  } catch (error) {
+    console.error(error);
+    return Response.json({ error: "Failed to remove item" }, { status: 500 });
   }
-  
-  
-  
 }
+
+  

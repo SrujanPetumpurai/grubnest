@@ -1,7 +1,7 @@
+import * as dotenv from 'dotenv'
 import mongoose from 'mongoose';
-
+dotenv.config();
 const MONGO_URI: string = process.env.MONGO_URI!;
-
 if (!MONGO_URI) {
     throw new Error("Please add your Mongo URI to .env");
 }
@@ -17,7 +17,6 @@ export async function connectToDB() {
 
     if (!cached.promise) {
         cached.promise = mongoose.connect(MONGO_URI, {
-            dbName: 'yourDatabaseName', // optional
             bufferCommands: false,
         }).then(mongoose => mongoose);
     }
