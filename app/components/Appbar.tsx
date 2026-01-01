@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import SearchBar from './SearchBar';
 import CategoryDropdown from './CategoryDropdown';
 import GetLocation from '@/app/components/GetLocation'
-
+import Profile from './Profile';
 type item = {
   name:string;
   cost:number;
@@ -55,8 +55,8 @@ function Signin() {
   if(status=='loading') return null
   if (session)
     return (
-      <button onClick={() => signOut()} className="pl-3 py-1 border rounded">
-        Sign out
+      <button>
+        <Profile></Profile>
       </button>
     );
 
@@ -65,10 +65,9 @@ function Signin() {
       <button onClick={() => signIn()} className="px-3 py-1 border rounded">
         Sign in
       </button>
-      <button onClick={()=>router.push('/Signup')}>
+      <button onClick={()=>router.push('/signup')}>
         Singup
       </button>
     </div>
   );
 }
-

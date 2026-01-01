@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { unique } from 'next/dist/build/utils';
 
 let user_Schema = new mongoose.Schema({
     email:{type:String,required:true,unique:true},
@@ -56,8 +55,46 @@ const reviewSchema = new mongoose.Schema({
     }],
     createdAt: { type: Date, default: Date.now },
   });
+    export const Cart = mongoose.models.Cart || mongoose.model('Cart',cartSchema)
 
-  
-  export const Cart = mongoose.models.Cart || mongoose.model('Cart',cartSchema)
+
+const orderSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+    required: true
+  },
+
+  items: [{
+    itemId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Items',
+      required: true
+    },
+    quantity: { type: Number, required: true },
+    priceAtPurchase: { type: Number, required: true } 
+  }],
+
+  totalAmount: { type: Number, required: true },
+
+  status: {
+    type: String,
+    enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
+    default: 'pending'
+  },
+
+  paymentMethod: { type: String },
+  paymentId: { type: String },
+
+  deliveryAddress: {
+    type: String,
+    required: true
+  },
+
+  createdAt: { type: Date, default: Date.now }
+});
+
+export const Orders = mongoose.models.Orders || mongoose.model('Orders', orderSchema);
+
   
   
