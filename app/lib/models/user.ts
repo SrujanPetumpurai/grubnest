@@ -4,22 +4,40 @@ let user_Schema = new mongoose.Schema({
     email:{type:String,required:true,unique:true},
     password:{type:String,required:true},
     name:{type:String,required:true},
-    address:{ 
+    surname:{type:String,required:true},
+    phNumber:{type:Number},
+    address:{
+      houseNo:{
+        type:String
+      },street:{
+        type:String
+      },landmark:{
+        type:String
+      },city:{
+        type:String
+      },
+      state:{
+        type:String
+      },
+      zipcode:{
+        type:Number
+      },
+      deliveryInstruction:{
+        type:String
+      }
+    },
+    location:{ 
       type:{
         type:String,
         enum:['Point'],
-        default: 'Point',
-        required:true
       },
       coordinates:{
       type: [Number],
-      required: true
-    },
-      location:{type:String,required:false}
+    }
     }
 })
 
-user_Schema.index({ address: '2dsphere' })
+user_Schema.index({ location: '2dsphere' })
 export const Users = mongoose.models.Users || mongoose.model('Users', user_Schema);
 
 
@@ -31,10 +49,12 @@ const item_Schema = new mongoose.Schema({
         category: { type: String, required: true, trim: true },
         discount:{type:String,required:false},
         rating:{type:Number},
-        measurement:{type:String,required:true}
+        measurement:{type:String,required:true},
+        isFeatured:{type:Boolean,required:true}
 });
 
 export const Items = mongoose.models.Items || mongoose.model('Items',item_Schema);
+item_Schema.index({ isFeatured: 1 });
 
 
 const reviewSchema = new mongoose.Schema({

@@ -55,9 +55,10 @@ function Signin() {
   if(status=='loading') return null
   if (session)
     return (
-      <button>
-        <Profile></Profile>
-      </button>
+      <div className='flex items-top'>
+        <div>Welcome, {session.user.name}</div>
+        <div><Profile></Profile></div>
+      </div>
     );
 
   return (

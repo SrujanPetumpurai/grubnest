@@ -13,6 +13,7 @@ type Item = {
   rating: number,
   cost: number,
   measurement: string,
+  isFeatured:boolean,
   _id: mongoose.ObjectId
 }
 

@@ -44,7 +44,7 @@ callbacks: {
         }        return session;
     },
     redirect: async ({ url, baseUrl}:any) => {
-        return `${baseUrl}/Home`
+        return `${baseUrl}/home`
         
     },
 },

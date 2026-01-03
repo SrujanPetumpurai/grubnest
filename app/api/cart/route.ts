@@ -57,7 +57,9 @@ export async function GET(req:NextRequest) {
     return Response.json({message:'no items yet',items:[]},{status:200})
   }
   if(cart.items.length>0){
-    const items = cart.items.map((item:{itemId:any,quantity:number})=>({
+    const items = cart.items
+    .filter((item: any) => item.itemId)
+    .map((item:{itemId:any,quantity:number})=>({
       name: item.itemId.name,
       image: item.itemId.image,
       cost: item.itemId.cost,

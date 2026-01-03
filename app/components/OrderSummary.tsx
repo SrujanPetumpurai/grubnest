@@ -1,8 +1,10 @@
 'use client'
 import { useEffect,useState } from "react"
-import { item } from "../(dashboard)/cart/page";
-export default function OrderSummary(){
-    const [items,setItems] = useState<item[]>([]);
+import { Item } from "../(dashboard)/cart/page";
+import { useRouter } from "next/navigation";
+export default function OrderSummary({ctaText}:{ctaText:string}){
+    const router = useRouter();
+    const [items,setItems] = useState<Item[]>([]);
     const [subTotal,setSubTotal] = useState(0);
     const [discount,setDiscount] = useState<number>(0);
     const [total,setTotal] = useState<number>(0);
@@ -34,7 +36,7 @@ export default function OrderSummary(){
 
     },[items])
     return(
-        <div className="w-[400px] mt-16 ml-4 h-[350px] border py-4 px-4 rounded-xl">
+        <div className="w-[400px] mt-16 h-[350px] border py-4 px-4 rounded-xl">
             <h1 className="font-bold w-full mb-4  text-xl">Order Summary</h1>
             <div className="flex w-full flex-col">
                 <div className="flex font-light pb-3 justify-between">
@@ -79,11 +81,11 @@ export default function OrderSummary(){
                         </div>
                     <button className="text-white text-sm w-[100px] bg-black py-1 px-2 rounded-xl ">Apply</button>
                 </div>
-                <button className="flex mx-auto gap-1 items-center justify-center mt-4 bg-black h-[45px] text-sm text-white w-[350px] rounded-full">
+                <button className="flex mx-auto gap-1 items-center justify-center mt-4 bg-black h-[45px] text-md text-white w-[350px] rounded-full">
                     
-                    <span>Go to Checkout</span>
+                    <span className="pb-2" onClick={()=>router.push('/checkout')}>Continue to {ctaText}</span>
                     <span>
-                        <svg
+                        <svg    
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
