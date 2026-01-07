@@ -37,7 +37,7 @@ let user_Schema = new mongoose.Schema({
     }
 })
 
-user_Schema.index({ location: '2dsphere' })
+user_Schema.index({ location: '2dsphere' },{sparse:true})
 export const Users = mongoose.models.Users || mongoose.model('Users', user_Schema);
 
 
@@ -102,7 +102,7 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
     default: 'pending'
   },
-
+  
   paymentMethod: { type: String },
   paymentId: { type: String },
 

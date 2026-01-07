@@ -28,16 +28,18 @@ export default function Checkout() {
     router.push('/signup');
   }
     }, [status, router]);
-    if (status === 'loading') return null;
 
    useEffect(()=>{
+    if (status!=='authenticated') return;
     async function getUserDetails(){
       const response = await fetch('/api/user')
       const data = await response.json()
       setUser(data)
     }
     getUserDetails();
-  },[])
+  },[status])
+    if (status === 'loading') return null;
+
   async function saveAddress(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     const form = e.currentTarget 
@@ -46,13 +48,13 @@ export default function Checkout() {
       method:"POST",
       headers:{'Content-type':'application/json'},
       body: JSON.stringify({
-          houseNo: data.get('houseNo'),
+          houseNo:data.get('houseNo'),
           street: data.get('street'),
           landmark: data.get('landmark'),
           city: data.get('city'),
           state: data.get('state'),
           phNumber: data.get('phNumber'),
-          zipcode:data.get('zipcode'),
+          zipcode:Number(data.get('zipcode')),
           deliveryInstruction:data.get('instruction')
         })
     })
@@ -73,14 +75,14 @@ export default function Checkout() {
               <input name="name" readOnly className="input" defaultValue={user?.name ?? ''} />
               <input name="surname" readOnly className="input" defaultValue={user?.surname ?? ''} />
               <input name="email" readOnly className="input col-span-2" defaultValue={user?.email ?? ''} />
-              <input name="phNumber" className="input col-span-2" defaultValue={user?.phNumber?.toString() ?? ''} />
-              <input name="houseNo" className="input"  defaultValue={user?.address?.houseNo??''} />
-              <input name="street" className="input" defaultValue={user?.address?.street??''} />
-              <input name="landmark" className="input col-span-2" defaultValue={user?.address?.landmark??''} />
-              <input name="city" className="input" defaultValue={user?.address?.city ?? ''} />
-              <input name="state" className="input" defaultValue={user?.address?.state ?? ''} />
-              <input name="zipcode" className="input" defaultValue={user?.address?.zipcode ?? ''} />
-              <textarea name="instruction" className="input col-span-2" defaultValue={user?.address?.deliveryInstruction??''}/>
+              <input name="phNumber" placeholder='phNumber'  className="input col-span-2" defaultValue={user?.phNumber?.toString() ?? ''} />
+              <input name="houseNo" placeholder='houseNo' className="input"  defaultValue={user?.address?.houseNo??''} />
+              <input name="street" placeholder='street' className="input" defaultValue={user?.address?.street??''} />
+              <input name="landmark" placeholder='landmark' className="input col-span-2" defaultValue={user?.address?.landmark??''} />
+              <input name="city" placeholder='city' className="input" defaultValue={user?.address?.city ?? ''} />
+              <input name="state" placeholder='state' className="input" defaultValue={user?.address?.state ?? ''} />
+              <input name="zipcode" placeholder='zipcode' className="input" defaultValue={user?.address?.zipcode ?? ''} />
+              <textarea name="instruction" placeholder='instruction' className="input col-span-2" defaultValue={user?.address?.deliveryInstruction??''}/>
             </div>
             <button className='bg-black rounded-lg hover:bg-gray-800' type='submit'>Save Adress</button>
           </form>
@@ -109,7 +111,7 @@ export default function Checkout() {
 
         <div className="bg-white p-6 rounded-lg border w-[450px] h-fit">
           <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
-          <OrderSummary ctaText='payment'></OrderSummary>
+          <OrderSummary payment={true} ctaText='payment'></OrderSummary>
         </div>
       </div>
 

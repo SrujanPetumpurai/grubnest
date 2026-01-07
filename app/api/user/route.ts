@@ -18,6 +18,7 @@ export async function GET() {
     try{
     const user = await Users.findById(session.user.id)
    const userAddress = {
+    name:user.name??'',
     phNumber:user.phNumber??'',
     surname:user.surname??'',
     email:user.email,

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import AppBar from "./components/Appbar";
 import Footer from "./components/Footer";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Providers>
           <AppBar></AppBar>
+          <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="afterInteractive"
+        />
         {children}
         <Footer></Footer>
         </Providers>

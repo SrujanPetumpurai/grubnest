@@ -69,7 +69,7 @@ export default function Cart() {
       className="w-vw gap-4 h-vh flex justify-center"
     >
       <CartItems />
-      <OrderSummary ctaText='Checkout'/>
+      <OrderSummary payment={false} ctaText='Checkout'/>
     </div>
   )
 }
