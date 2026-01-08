@@ -31,27 +31,27 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_SECRET!
 });
 
-export async function POST(req: Request) {
-  try {
-    const { amount } = await req.json();
-    console.log('razorpay details')
-    console.log(process.env.NEXT_PUBLIC_RAZORPAY_ID);
-console.log(process.env.RAZORPAY_SECRET);
+  export async function POST(req: Request) {
+    try {
+      const { amount } = await req.json();
+      console.log('razorpay details')
+      console.log(process.env.NEXT_PUBLIC_RAZORPAY_ID);
+      console.log(process.env.RAZORPAY_SECRET);
 
-    const order = await razorpay.orders.create({
-      amount: amount * 100,
-      currency: "INR",
-    });
+      const order = await razorpay.orders.create({
+        amount: amount * 100,
+        currency: "INR",
+      });
 
-    return NextResponse.json({
-      razorpayOrderId: order.id,
-      amount: order.amount,
-    });
-  } catch (err) {
-    console.error("ORDER ERROR:", err);
-    return NextResponse.json(
-      { error: "Failed to create order" },
-      { status: 500 }
-    );
+      return NextResponse.json({
+        razorpayOrderId: order.id,
+        amount: order.amount,
+      });
+    } catch (err) {
+      console.error("ORDER ERROR:", err);
+      return NextResponse.json(
+        { error: "Failed to create order" },
+        { status: 500 }
+      );
+    }
   }
-}

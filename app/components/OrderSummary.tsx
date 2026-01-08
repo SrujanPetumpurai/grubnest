@@ -2,6 +2,7 @@
     import { useEffect,useState } from "react"
     import { Item } from "../(dashboard)/cart/page";
     import { useRouter } from "next/navigation";
+import { callbackify } from "util";
 
     export default function OrderSummary({ctaText,payment}:{ctaText:string,payment:boolean}){
         const router = useRouter();
@@ -32,6 +33,7 @@
                             currency: "INR",
                             order_id: data.razorpayOrderId,
                             name: "Grubnest",
+                            callback_url:'localhost:3000/api/razorpay',
                             handler: function (response: any) {
                             console.log(response);
                             }

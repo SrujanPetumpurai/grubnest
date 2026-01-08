@@ -99,18 +99,20 @@ const orderSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
-    default: 'pending'
+    enum: ['created','authorized','failed','captured',],
+    default: 'created'
   },
   
-  paymentMethod: { type: String },
   paymentId: { type: String },
 
   deliveryAddress: {
     type: String,
     required: true
   },
-
+  orderId:{
+    type:String,
+    required:true
+  },
   createdAt: { type: Date, default: Date.now }
 });
 
