@@ -2,7 +2,6 @@
     import { useEffect,useState } from "react"
     import { Item } from "../(dashboard)/cart/page";
     import { useRouter } from "next/navigation";
-import { callbackify } from "util";
 
     export default function OrderSummary({ctaText,payment}:{ctaText:string,payment:boolean}){
         const router = useRouter();
@@ -18,7 +17,7 @@ import { callbackify } from "util";
             const res = await fetch("/api/orders", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount: total }) 
+            body: JSON.stringify({ amount: total,items }) 
         });
             if (!res.ok) {
             const text = await res.text();
@@ -33,9 +32,14 @@ import { callbackify } from "util";
                             currency: "INR",
                             order_id: data.razorpayOrderId,
                             name: "Grubnest",
-                            callback_url:'localhost:3000/api/razorpay',
-                            handler: function (response: any) {
+                            handler:async function (response: any) {
                             console.log(response);
+                            console.log("This is handler function")
+                              await fetch('/api/paymentConfirmation',{
+                                method:"POST",
+                                body:new URLSearchParams(response)
+                              })
+                              router.push('/payment')
                             }
                             };
             const rzp = new (window as any).Razorpay(options);
