@@ -2,10 +2,13 @@
 import { useEffect, useState } from "react";
 
 type Order = {
-  _id: string;
+  _id:string;
+  orderId: string;
+  userId:string|null
   totalAmount: number;
   status: string;
   createdAt: string;
+  deliveryAddress:string;
   items: {
     itemId: {
       _id: string;
@@ -13,6 +16,8 @@ type Order = {
       image: string;
     };
     quantity: number;
+    orderId:string;
+    paymentId:string|null;
     priceAtPurchase: number;
   }[];
 };
@@ -43,11 +48,11 @@ export default function Order(){
 
       <div className="space-y-6">
         {orders.map(order => (
-          <div key={order._id} className="border rounded-lg p-4">
+          <div key={order.orderId} className="border rounded-lg p-4">
             <div className="flex justify-between mb-3">
               <div>
                 <p className="font-semibold">Order ID</p>
-                <p className="text-sm text-gray-600">{order._id}</p>
+                <p className="text-sm text-gray-600">{order.orderId}</p>
               </div>
               <div className="text-right">
                 <p className="font-semibold">₹{order.totalAmount}</p>

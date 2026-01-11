@@ -34,12 +34,13 @@ export async function POST(req:NextRequest){
                 status:'captured',
             }
         })
-        return NextResponse.redirect(new URL("/payment", req.url));
+        return NextResponse.json({status:'success',orderId:razorpay_order_id})
     }catch(e){
             if(razorpay_order_id){
                 await Orders.findOneAndUpdate({orderId:razorpay_order_id},{
                 $set:{
-                    status:'failed'
+                    status:'failed',
+                    orderId:razorpay_order_id
                 }
             })
             }

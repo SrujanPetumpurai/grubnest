@@ -35,11 +35,12 @@
                             handler:async function (response: any) {
                             console.log(response);
                             console.log("This is handler function")
-                              await fetch('/api/paymentConfirmation',{
+                            const res =  await fetch('/api/paymentConfirmation',{
                                 method:"POST",
                                 body:new URLSearchParams(response)
                               })
-                              router.push('/payment')
+                            const data = await res.json();
+                              router.push(`/payment?status=${data.status}&orderId=${data.orderId}`)
                             }
                             };
             const rzp = new (window as any).Razorpay(options);

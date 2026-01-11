@@ -21,7 +21,7 @@ export async function GET() {
   await connectToDB();
 
   const orders = await Orders.find({ userId: session.user.id })
-    .populate("items.itemId")
+    .populate("items.itemId","name image ")
     .sort({ createdAt: -1 });
 
   return NextResponse.json(orders, { status: 200 });
