@@ -13,15 +13,31 @@ L.Icon.Default.mergeOptions({
     'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 })
 
-type Center = [number, number]
-
-export default function LeafletMap({ lat, lng }: { lat: number; lng: number }) {
-  const center: Center = [lat, lng]
+export default function LeafletMap({
+  lat,
+  lng,
+  onChange,
+}: {
+  lat: number
+  lng: number
+  onChange: (lat: number, lng: number) => void
+}) {
+  const center: [number, number] = [lat, lng]
 
   return (
-    <MapContainer center={center} zoom={14} className="w-full h-[400px]">
+    <MapContainer key={`${lat}-${lng}`} center={center} zoom={14} className="w-full rounded-lg rounded-bl-[0px] h-[400px]">
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Marker position={center} />
+      <Marker
+        position={center}
+        draggable
+        eventHandlers={{
+          dragend: (e) => {
+            const { lat, lng } = e.target.getLatLng()
+            onChange(lat, lng)
+          },
+        }}
+      />
     </MapContainer>
   )
 }
+

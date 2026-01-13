@@ -52,12 +52,12 @@ export default function AppBar() {
 function Signin() {
   const { data: session,status } = useSession();
   const router = useRouter()
+  const name = session?.user.name || ''
   if(status=='loading') return null
   if (session)
     return (
       <div className='flex items-top'>
-        <div>Welcome, {session.user.name}</div>
-        <div><Profile></Profile></div>
+        <div><Profile name={name}></Profile></div>
       </div>
     );
 

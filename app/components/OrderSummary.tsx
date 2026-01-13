@@ -33,7 +33,6 @@
                             order_id: data.razorpayOrderId,
                             name: "Grubnest",
                             handler:async function (response: any) {
-                            console.log(response);
                             console.log("This is handler function")
                             const res =  await fetch('/api/paymentConfirmation',{
                                 method:"POST",
@@ -41,11 +40,19 @@
                               })
                             const data = await res.json();
                               router.push(`/payment?status=${data.status}&orderId=${data.orderId}`)
+                            },
+                            modal:{
+                                ondismiss:()=>{
+                                    console.log('Paymet got dismissed')
+                                    router.push(`/payment?status=failure&orderId=null`)
+                                }
                             }
+
                             };
             const rzp = new (window as any).Razorpay(options);
             rzp.on("payment.failed", function (response: any) {
                 console.error(response.error);
+                router.push(`/payment?status=failure&orderId=null`)
                 });
             rzp.open();
         }

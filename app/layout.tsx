@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import AppBar from "./components/Appbar";
 import Footer from "./components/Footer";
 import Script from "next/script";
+import 'leaflet/dist/leaflet.css'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

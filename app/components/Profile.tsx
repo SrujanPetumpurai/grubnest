@@ -2,7 +2,7 @@
 import { useState,useRef,useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-export default function Profile() {
+export default function Profile({name}:{name:string}) {
   const ref = useRef<HTMLDivElement|null>(null)  
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function Profile() {
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 text-gray-700"
+            className="w-7 h-7 text-gray-700"
         >
             <g clipPath="url(#clip0)">
             <path
@@ -43,7 +43,7 @@ export default function Profile() {
       {open && (
         <div className="absolute right-0 mt-2 w-48 rounded-md border bg-white shadow-md">
           <ul className="py-1 text-sm text-gray-700">
-            <li onClick={()=>router.push('/profile')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Account</li>
+            <li onClick={()=>router.push('/profile')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Account <span className="italic">({name})</span></li>
             <li onClick={()=>router.push('/cart')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Cart</li>
             <li onClick={()=>router.push('/orders')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Order History</li>
             <li onClick={()=>window.scrollTo({

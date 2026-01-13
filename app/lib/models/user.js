@@ -1,12 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Orders = exports.Cart = exports.Reviews = exports.Items = exports.Users = void 0;
+exports.Stores = exports.Orders = exports.Cart = exports.Reviews = exports.Items = exports.Users = void 0;
 var mongoose_1 = require("mongoose");
 var user_Schema = new mongoose_1.default.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
-    address: { type: String },
+    surname: { type: String, required: true },
+    phNumber: { type: Number },
+    address: {
+        houseNo: {
+            type: String
+        }, street: {
+            type: String
+        }, landmark: {
+            type: String
+        }, city: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        zipcode: {
+            type: Number
+        },
+        deliveryInstruction: {
+            type: String
+        }
+    },
     location: {
         type: {
             type: String,
@@ -17,7 +38,7 @@ var user_Schema = new mongoose_1.default.Schema({
         }
     }
 });
-user_Schema.index({ location: '2dsphere' });
+user_Schema.index({ location: '2dsphere' }, { sparse: true });
 exports.Users = mongoose_1.default.models.Users || mongoose_1.default.model('Users', user_Schema);
 var item_Schema = new mongoose_1.default.Schema({
     name: { type: String, required: true, trim: true },
@@ -30,6 +51,7 @@ var item_Schema = new mongoose_1.default.Schema({
     isFeatured: { type: Boolean, required: true }
 });
 exports.Items = mongoose_1.default.models.Items || mongoose_1.default.model('Items', item_Schema);
+item_Schema.index({ isFeatured: 1 });
 var reviewSchema = new mongoose_1.default.Schema({
     itemId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Items', required: true },
     userId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'Users', requried: true },
@@ -65,15 +87,42 @@ var orderSchema = new mongoose_1.default.Schema({
     totalAmount: { type: Number, required: true },
     status: {
         type: String,
-        enum: ['pending', 'paid', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending'
+        enum: ['created', 'authorized', 'failed', 'captured',],
+        default: 'created'
     },
-    paymentMethod: { type: String },
     paymentId: { type: String },
     deliveryAddress: {
+        type: String,
+        required: true
+    },
+    orderId: {
         type: String,
         required: true
     },
     createdAt: { type: Date, default: Date.now }
 });
 exports.Orders = mongoose_1.default.models.Orders || mongoose_1.default.model('Orders', orderSchema);
+var storeSchema = new mongoose_1.default.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            require: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
+    serviceRadiusKm: {
+        type: Number,
+        default: 10,
+        required: true
+    }
+});
+exports.Stores = mongoose_1.default.models.Stores || mongoose_1.default.model('Stores', storeSchema);
+storeSchema.index({ locatioN: '2dsphere' });

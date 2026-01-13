@@ -118,5 +118,29 @@ const orderSchema = new mongoose.Schema({
 
 export const Orders = mongoose.models.Orders || mongoose.model('Orders', orderSchema);
 
-  
-  
+const storeSchema = new mongoose.Schema({
+  name:{
+    type:String,
+    required:true,
+  },
+  location:{
+    type:{
+      type:String,
+      enum:['Point'],
+      require:true
+    },
+    coordinates:{
+      type:[Number],
+      required:true
+    }
+  },
+  serviceRadiusKm:{
+    type:Number,
+    default:10,
+    required:true
+  }
+
+})
+
+export const Stores = mongoose.models.Stores || mongoose.model('Stores',storeSchema)
+storeSchema.index({locatioN:'2dsphere'})
