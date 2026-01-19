@@ -48,21 +48,65 @@
         }
         
         return(
-            <div className="w-full h-full flex justify-center items-center">
-                <form className="w-[400px] h-[500px] flex flex-col px-4 py-2 mt-16 border rounded-xl " onSubmit={makeAccount}>
-                    {err && <div className="bg-red-500 w-[320px] h-[20px] text-white ">
-                        {err}
-                    </div> }
-                    <label className="font-semibold" htmlFor="email">Email</label>
-                    <input onChange={(e)=>setEmail(e.target.value)} placeholder="email" type="text" id="email" />
-                    <label className="font-semibold" htmlFor="password" >Password</label>
-                    <input onChange={(e)=>setPassword(e.target.value)} placeholder="password" type="text" id="password" />
-                    <label className="font-semibold" htmlFor="name">Name</label>
-                    <input onChange={(e)=>setName(e.target.value)} placeholder="name" type="text" id="name" />
-                    <label className="font-semibold" htmlFor="surname">Surname</label>
-                    <input onChange={(e)=>setSurname(e.target.value)} placeholder='surname'  id='surname' type="text"  />
-                    <button type="submit">Create Account</button>
+            <div className="py-16 w-full flex items-center justify-center bg-gray-50">
+             <div className="w-[400px] rounded-xl border bg-gray-50 shadow-md">
+                <h1 className="text-2xl font-semibold text-center py-4 border-b">
+                Sign Up
+                </h1>
+
+                <form
+                className="flex flex-col gap-3 px-6 py-4"
+                onSubmit={makeAccount}
+                >
+                {err && (
+                    <div className="text-sm text-red-600 bg-red-100 px-3 py-2 rounded">
+                    {err}
+                    </div>
+                )}
+
+                <label className="text-sm font-medium" htmlFor="email">Email</label>
+                <input
+                    id="email"
+                    type="text"
+                    placeholder="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="border  hover:bg-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                />
+
+                <label className="text-sm font-medium" htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border  hover:bg-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                />
+
+                <label className="text-sm font-medium" htmlFor="name">Name</label>
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="name"
+                    onChange={(e) => setName(e.target.value)}
+                    className="border  hover:bg-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                />
+
+                <label className="text-sm font-medium" htmlFor="surname">Surname</label>
+                <input
+                    id="surname"
+                    type="text"
+                    placeholder="surname"
+                    onChange={(e) => setSurname(e.target.value)}
+                    className="border  hover:bg-gray-100 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                />
+
+                <button
+                    type="submit"
+                    className="mt-4 bg-black text-white py-2 rounded hover:-translate-y-1/10 hover:bg-black  duration-200 transition"
+                >Create Account
+                </button>
                 </form>
             </div>
+        </div>
         )
     }

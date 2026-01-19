@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import AppBar from "./components/Appbar";
 import Footer from "./components/Footer";
 import Script from "next/script";
+import Breadcrumbs from "./components/BreadCrumbs";
 import 'leaflet/dist/leaflet.css'
 
 const geistSans = Geist({
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col`}>
         <Providers>
           <AppBar></AppBar>
           <Script

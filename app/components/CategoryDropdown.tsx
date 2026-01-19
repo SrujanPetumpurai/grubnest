@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState,useRef,useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function CategoryDropdown() {
@@ -12,9 +12,19 @@ export default function CategoryDropdown() {
     'eggs',
     'vegetable',
   ]
-
+  const ref = useRef<HTMLDivElement|null>(null);
+  useEffect(()=>{
+    function handleClickOutside(e:any){
+      if(!ref.current) return
+        if(!ref.current.contains(e.target)){
+            setOpen(false)
+        }
+    }
+    document.addEventListener('mousedown',handleClickOutside);
+    return ()=>document.removeEventListener('mousedown',handleClickOutside)
+},[])
   return (
-    <div className="relative inline-block text-left">
+    <div ref={ref} className="relative inline-block text-left">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 border px-4 py-2 rounded-lg hover:bg-gray-100"
@@ -33,9 +43,8 @@ export default function CategoryDropdown() {
           />
         </svg>
       </button>
-
-      {open && (
-        <ul className="absolute z-10 mt-2 w-48 bg-white border rounded-lg shadow-md">
+        <ul className={`absolute z-10 mt-2 w-48 bg-white border rounded-lg shadow-md transition-all duration-200 ease-in-out
+                       ${open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
           {categories.map((cat) => (
             <li
               key={cat}
@@ -49,7 +58,6 @@ export default function CategoryDropdown() {
             </li>
           ))}
         </ul>
-      )}
     </div>
   )
 }

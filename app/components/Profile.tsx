@@ -19,7 +19,7 @@ export default function Profile({name}:{name:string}) {
     };
   },[])
   return (
-    <div ref={ref} className="relative inline-block text-left">
+    <div ref={ref} className="relative hover:bg-gray-200 rounded-lg inline-block text-left">
       <button onClick={() => setOpen(o => !o)}>
         <svg
             viewBox="0 0 24 24"
@@ -40,8 +40,7 @@ export default function Profile({name}:{name:string}) {
             </defs>
         </svg>
       </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md border bg-white shadow-md">
+        <div className={`transition-all ease-in-out duration-200  ${open?'opacity-100 scale-100':'opacity-0 scale-95 pointer-events-none'}  absolute right-0 mt-2 w-48 rounded-md border bg-white shadow-md`}>
           <ul className="py-1 text-sm text-gray-700">
             <li onClick={()=>router.push('/profile')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Account <span className="italic">({name})</span></li>
             <li onClick={()=>router.push('/cart')} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Cart</li>
@@ -58,7 +57,6 @@ export default function Profile({name}:{name:string}) {
             </li>
           </ul>
         </div>
-      )}
     </div>
   );
 }

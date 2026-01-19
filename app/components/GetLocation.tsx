@@ -48,16 +48,19 @@ export default function GetLocation() {
 
   return (
     <div ref={ref} className="flex  flex-col gap-3 relative">
-      <button
+      <div className='flex justify-between items-center'>
+        <span className='text-gray-500 italic'>{locality?`${locality}...`:''}</span>
+        <button
         onClick={getLocation}
-        className=" rounded-md hover:bg-emerald-700"
+        className=" rounded-md hover:bg-gray-200"
       >
         <svg viewBox="0 0 32 32"xmlns="http://www.w3.org/2000/svg"fill="none"stroke="currentColor"className='w-6 h-6'strokeWidth={2}strokeLinecap="round"strokeLinejoin="round">
             <path d="M25,13c0,8-9,15-9,15s-9-7-9-15c0-5,4-9,9-9S25,8,25,13z" />
             <circle cx={16} cy={13} r={3} />
           </svg>
-        <span>{locality}...</span>
       </button>
+      </div>
+      
 
       {coords && open && (
         <div onMouseDown={(e) => e.stopPropagation()}  className="w-[400px] h-[400px] absolute z-50 top-12 right-0 w-[90vw] max-w-[420px] h-[400px]  shadow-lg rounded-lg">

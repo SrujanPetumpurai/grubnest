@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 async function main(){
    await connectToDB();
    console.log(mongoose.connection.name)
+   await Items.deleteMany()
+   await Stores.deleteMany()
    await Items.insertMany( [
 {name:"Tomatoes",image:"/tomatoes.png",cost:60,category:"vegetable",discount:"10%",rating:4.2,measurement:"1kg",isFeatured:true},
 {name:"Spinach",image:"/spinach.png",cost:40,category:"vegetable",rating:4.5,measurement:"250g",isFeatured:false},

@@ -15,12 +15,11 @@ export default function AboutProduct() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-12">
-      <h2 className="text-center text-3xl font-extrabold tracking-tight text-emerald-900 md:text-4xl">
+      <h2 className="text-center text-3xl font-extrabold tracking-tight text-lime-900 md:text-4xl">
         Fresh & Flavorful organic goods
       </h2>
-
       <div className="mt-8 grid items-start gap-8 md:grid-cols-2">
-        <div className="rounded-3xl bg-emerald-50/60 p-4">
+        <div className="rounded-3xl bg-lime-50/60 p-4">
           <div className="overflow-hidden rounded-3xl">
             <img
               src="/AboutFood.png"
@@ -30,18 +29,18 @@ export default function AboutProduct() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-emerald-50/60 p-4">
-          <div className="rounded-2xl border border-emerald-200/70 bg-white p-3 shadow-sm">
+        <div className="rounded-3xl bg-lime-50/60 p-4">
+          <div className="rounded-2xl border border-lime-200/70 bg-white p-3 ">
             <ul className="space-y-3">
               {items.map((item, idx) => (
                 <li key={item.title}>
                   <details
-                    className="group rounded-xl border border-emerald-100 bg-emerald-50/30 p-4 open:bg-emerald-50"
+                    className="group rounded-xl border border-lime-100 bg-lime-50/30 p-4 open:bg-lime-50"
                     {...(item.open ? { open: true } : {})}
                   >
                     <summary className="flex cursor-pointer list-none items-center justify-between">
-                      <span className="font-semibold text-emerald-900">{item.title}</span>
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-emerald-200 bg-white text-emerald-700 transition group-open:rotate-180">
+                      <span className="font-semibold text-lime-900">{item.title}</span>
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-lime-200 bg-white text-lime-700 transition group-open:rotate-180">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -56,7 +55,7 @@ export default function AboutProduct() {
                         </svg>
                       </span>
                     </summary>
-                    <p className="mt-3 text-sm leading-relaxed text-emerald-800/80">{item.content}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-lime-800/80">{item.content}</p>
                   </details>
                 </li>
               ))}

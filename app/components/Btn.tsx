@@ -1,6 +1,6 @@
 export default function Btn({text,bgColor,svgColor,textColor}:{svgColor:string,text:string,bgColor:string,textColor:string}){
     return(
-        <button style={{backgroundColor:bgColor}} className={`z-20 relative items-center text-sm w-[130px] h-[40px] border rounded-3xl px-2 py-2 flex `}>
+        <button style={{backgroundColor:bgColor}} className={`z-20 transition duration-200 ease hover:-translate-y-1 relative items-center text-sm w-[130px] h-[40px] border rounded-xl px-2 py-2 flex `}>
             <svg className="size-4 w-[20%]"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"

@@ -7,10 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-         'eggsy':'#801111',
-         'darkRed':'#D34A40',
-         'itembgcolor':'#F7F8F1'
       
+      },
+      fontFamily:{
+        heading:['Poppins','sans-serif'],
+        body:['Inter','sans-serif']
       }
     },
   },
