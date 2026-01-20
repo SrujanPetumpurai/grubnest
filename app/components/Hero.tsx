@@ -3,7 +3,7 @@ import FreeDelivery from "./FreeDeliveryIcon";
 export default function Hero(){
     return (
             <div
-                className="w-full lg:w-[1200px] mt-6 mx-auto h-auto lg:h-[420px] rounded-2xl relative overflow-hidden flex flex-col lg:flex-row items-center"
+                className="hidden md:flex md:flex-row md:w-[700px] md:h-[254px] w-full lg:w-[1200px] mt-6 mx-auto h-auto lg:h-[420px] rounded-2xl relative overflow-hidden  flex-col lg:flex-row items-center"
                 style={{ backgroundImage: "url('/foodbackground1.jpg')" }}
             >
                 {/* overlay */}
@@ -36,7 +36,7 @@ export default function Hero(){
                 <img
                     src="/man_with_vegetables.png"
                     alt=""
-                    className="h-[280px] lg:h-[460px] drop-shadow-2xl translate-y-0 lg:translate-y-17"
+                    className="hidden md:block md:h-[280px] md:w-auto lg:h-[460px] drop-shadow-2xl translate-y-0 lg:translate-y-17"
                 />
                 </div>
 </div>

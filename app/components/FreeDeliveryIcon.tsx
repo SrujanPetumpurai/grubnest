@@ -1,6 +1,6 @@
 export default function FreeDelivery(){
     return(
-        <div className="flex rounded-full w-[300px] py-[4px] px-[4px] bg-red-700 ">
+        <div className=" hidden md:flex md: rounded-full w-[300px] py-[4px] px-[4px] bg-red-700 ">
             <div className="bg-white rounded-full py-[2px] px-[2px]">
               <svg
                 className="h-6 w-6 "
@@ -19,7 +19,6 @@ export default function FreeDelivery(){
                     <path d="M487.4,726.11l-71.6-59.3c-1.8-1.5-4-2.3-6.4-2.3h-84.2v-36c0-5.5-4.5-10-10-10H60.5c-5.5,0-10,4.5-10,10v73.2c0,5.5,4.5,10,10,10s10-4.5,10-10v-63.2h234.8v237.1h-82c-5.5,0-10,4.5-10,10s4.5,10,10,10h122.1c5.5,0,10-4.5,10-10s-4.5-10-10-10h-20.1v-191.1h80.6l65.2,54l-0.7,136.9H460c-5.5,0-10,4.5-10,10s4.5,10,10,10h20.3c5.5,0,10-4.4,10-9.9l0.8-151.6c0-3-1.3-5.9-3.6-7.8z" />
                 </g>
                 </svg>
-
             </div>
             <div className="ml-1">
                 Get Free Delivery On Your First Order

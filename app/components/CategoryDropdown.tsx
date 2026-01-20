@@ -27,7 +27,7 @@ export default function CategoryDropdown() {
     <div ref={ref} className="relative inline-block text-left">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 border px-4 py-2 rounded-lg hover:bg-gray-100"
+        className="flex items-center gap-2 border md:px-3 md:py-1 text-xs md:text-sm lg:px-4 lg:py-2 rounded-lg hover:bg-gray-100"
       >
         Shop by Category
         <svg
@@ -43,12 +43,12 @@ export default function CategoryDropdown() {
           />
         </svg>
       </button>
-        <ul className={`absolute z-10 mt-2 w-48 bg-white border rounded-lg shadow-md transition-all duration-200 ease-in-out
+        <ul className={`absolute z-10 mt-2 md:w-30 lg:w-48 bg-white border rounded-lg shadow-md transition-all duration-200 ease-in-out
                        ${open ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
           {categories.map((cat) => (
             <li
               key={cat}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+              className="md:px-2 md:py-1 lg:px-4 lg:py-2 hover:bg-gray-100 cursor-pointer text-sm"
               onClick={() => {
                 router.push(`/Products?category=${encodeURIComponent(cat)}`)
                 setOpen(false)

@@ -1,11 +1,12 @@
 'use client';
-import { useSession, signOut, signIn } from 'next-auth/react';
-import Image from 'next/image';
+import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import SearchBar from './SearchBar';
 import CategoryDropdown from './CategoryDropdown';
 import GetLocation from '@/app/components/GetLocation'
 import Profile from './Profile';
+import Link from 'next/link';
 type item = {
   name:string;
   cost:number;
@@ -13,19 +14,20 @@ type item = {
   img:string;
 }
 export default function AppBar() {
-  const router = useRouter();
-  
+  const {data:session} = useSession();
+  const name = session?.user.name || ''
+  const [open,setOpen] = useState<boolean>(false);
   return (
-    <div className="w-full lg:w-[1200px] mx-auto sticky top-0 z-50 opacity-100 h-16 lg:h-20 mt-2 bg-white text-black flex items-center justify-between border-b shadow-sm px-2 lg:px-6 gap-2">
-        <div className="h-16 w-16 lg:h-26 lg:w-26">
-          <Image alt='logo of the company(eggsy)' width={104} height={104} src='/logo.png' />
+    <div className="w-full lg:w-[1200px] mx-auto sticky top-0 z-50 opacity-100 h-14 lg:h-20 mt-2 bg-white text-black flex items-center justify-between border-b shadow-sm px-2 lg:px-6 gap-2">
+        <div className="md:h-20 md:w-20 h-12 w-14 lg:h-26 lg:w-26 pt-4">
+                    <img src="/logo.png" className='w-full h-[80%]' alt="" />
         </div>
 
-        <div className="hidden md:block">
+        <div className="sm:block  md:block">
           <CategoryDropdown></CategoryDropdown>
         </div>
 
-        <div className='hidden md:flex w-full lg:w-[500px] items-center h-[25px]'>
+        <div className='flex w-[380px] sm:w-[450px] lg:w-[500px] items-center h-[25px]'>
           <SearchBar></SearchBar>
         </div>
         
@@ -36,8 +38,30 @@ export default function AppBar() {
         <div className="hidden md:block">
           <Signin></Signin>
         </div>
+        <div className='inline-block md:hidden'>
+          <span onClick={()=>setOpen(prev=>!prev)}> ☰</span>
+          {open && (
+              <ul className={`flex flex-col items-start w-[40px] transition-all duration-200 ease-in-out absolute z-5 top-10 right-2 bg-gray-300 border border-black rounded-lg ${open?'opacity-100 scale-100':'opacity-0 scale-95 pointer-events-none'}`}>
+                <li>
+                <Profile name={name}></Profile>
+                </li>
+                <li><GetLocation></GetLocation></li>
+                <li><Cart></Cart></li>
+              </ul>
+          )
+          }
+        </div>
+        <div className='hidden md:inline-block'> 
+        <Cart></Cart>
+        </div>
+  </div>
 
-        <div onClick={()=>router.push('/cart')} className='w-8 h-8 lg:w-[35px] lg:h-[35px] hover:bg-gray-200 rounded-lg'>
+  );
+}
+function Cart(){
+  return(
+   <Link href={'/cart'}>
+    <div  className='md:inline-block w-8 h-8 lg:w-[35px] lg:h-[35px] hover:bg-gray-200 rounded-lg'>
           <svg className='w-7 h-7'
             fill="#000000"
             viewBox="0 0 902.86 902.86"
@@ -49,11 +73,9 @@ export default function AppBar() {
             </g>
           </svg>
         </div>
-  </div>
-
-  );
+    </Link>
+  )
 }
-
 function Signin() {
   const { data: session,status } = useSession();
   const router = useRouter()

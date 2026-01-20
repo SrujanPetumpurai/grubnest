@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import CategoryCard from "./CategoryCard";
 
 const categories = [
@@ -16,7 +16,20 @@ const categories = [
 
 export default function Carousel() {
   const [start, setStart] = useState(0);
-  const visibleCount = 6;
+  const [visibleCount, setVisibleCount] = useState(6);
+
+useEffect(() => {
+  const update = () => {
+    if (window.innerWidth < 640) setVisibleCount(2);
+    else if (window.innerWidth < 768) setVisibleCount(3);
+    else if (window.innerWidth < 1024) setVisibleCount(4);
+    else setVisibleCount(6);
+  };
+
+  update();
+  window.addEventListener("resize", update);
+  return () => window.removeEventListener("resize", update);
+}, []);
 
   const prev = () => setStart((start - 1 + categories.length) % categories.length);
   const next = () => setStart((start + 1) % categories.length);

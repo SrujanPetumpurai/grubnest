@@ -42,8 +42,8 @@ export default function AddCart({id,Inquantity,bg,cl}:{id:string,Inquantity:numb
     }
     return(
         <div>
-            {quantity===0 && <div onClick={()=>AddtoCart(null)} style={{color:cl,backgroundColor:bg}} className=" flex items-center justify-center w-[190px] h-[35px] rounded-md">
-                <span style={{color:cl}} className="inline-block text-xs font-bold text-white pr-1 ">ADD TO CART</span>
+            {quantity===0 && <div onClick={()=>AddtoCart(null)} style={{color:cl,backgroundColor:bg}} className=" flex items-center justify-center w-[90px] h-[25px]  sm:w-[120px] h-[30px] md:w-[190px] md:h-[35px] rounded-md">
+                <span style={{color:cl}} className="inline-block text-xs font-bold text-white  sm:pr-1 ">ADD TO CART</span>
                        <svg className="h-[16px] w-[16px]"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"

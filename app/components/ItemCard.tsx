@@ -26,7 +26,11 @@ export default function ItemCard({
     price = cost - (((parseFloat(discount.replace('%','')))*cost)/100)
   }
   return (
-    <div className="relative flex-col bg-[var(--itemcolor)] border rounded-xl mb-4  mr-6 w-[270px] h-[400px] overflow-hidden">
+    <div className="relative flex-col bg-[var(--itemcolor)] border rounded-xl mb-4 mr-6 
+                      w-[160px] h-[260px]
+                      sm:w-[200px] sm:h-[300px]
+                      md:w-[230px] md:h-[350px]
+                      lg:w-[270px] lg:h-[400px]">
       {discount && (
         <div className="absolute font-semibold  bg-green-700 text-white text-[10px] font-semibold px-2 py-1 rounded">
           {discount}% OFF
@@ -35,7 +39,7 @@ export default function ItemCard({
 
       <img className="w-[90%] mt-3 mx-3
        rounded-md h-[40%] border rounded-lg" src={image} alt={name} />
-       <div className="flex w-[90%] mx-3 mt-2  justify-between items-center">
+        <div className="hidden md:flex w-[90%] mx-3 mt-2  justify-between items-center">
           <span className="inline-block  text-sm text-gray-400">
             {category}
           </span>
@@ -43,14 +47,14 @@ export default function ItemCard({
           <Rating rating={rating} />
         </span>
        </div>
-      <span className="w-[90%] mx-3 mt-4 inline-block  text-teal-800 text-lg font-semibold">
+      <span className="w-[90%] mx-3 mt-1 md:mt-4 inline-block  text-teal-800 text-sm md:text-lg font-semibold">
         {name}
       </span>
-      <span className=" inline-block mt-1 text-lg w-[90%] mx-3 border border-gray-200 pl-3 rounded-md bg-gray-100/50">{measurement}</span>
-      <span className="  inline-flex mt-8 text-lg w-[90%] mx-3 font-semibold">
+      <span className=" inline-block mt-1 text-sm md:text-lg w-[90%] mx-3 border border-gray-200 pl-3 rounded-md bg-gray-100/50">{measurement}</span>
+      <span className="  inline-flex mt-1 md:mt-8 text-sm md:text-lg w-[90%] mx-3 font-semibold">
         <RupeeSymbol />
         {discount?<div>
-          <span className="text-lg mr-2 font-semibold">{price}</span>
+          <span className="text-sm md:text-lg mr-2 font-semibold">{price}</span>
           <span className="line-through text-sm  text-gray-500">{cost}</span>
         </div> :<span>{cost}</span> }
       </span>
