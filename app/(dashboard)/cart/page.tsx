@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
-import CartItem from '@/app/components/CartItem'
 import OrderSummary from '@/app/components/OrderSummary'
+import { CartItems } from '@/app/components/CartItems'
 import Link from 'next/link'
 export interface Item {
   name: string
@@ -14,30 +14,7 @@ export interface Item {
   isFeatured:boolean
 }
 
-export function CartItems({items}:{items:Item[]}) {
-  
 
-  return (
-    <div>
-    
-      <div className="border mt-16 w-full max-w-[500px] rounded-xl flex flex-col items-center">
-      {items.map(item => (
-        <CartItem
-          key={item.itemId}
-          image={item.image}
-          id={item.itemId}
-          quantity={item.quantity}
-          name={item.name}
-          cost={item.cost}
-          discount={item.discount}
-          category={item.category}
-        />
-      ))}
-    </div>
-    
-    </div>
-  )
-}
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([])

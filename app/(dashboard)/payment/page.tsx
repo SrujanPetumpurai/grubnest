@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 type Order = {
   orderId: string
@@ -9,8 +10,12 @@ type Order = {
   deliveryAddress: string
   status: string
 }
-
-export default function Payment() {
+export default function Payment(){
+  <Suspense>
+    <PaymentInner></PaymentInner>
+  </Suspense>
+}
+ function PaymentInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const status = searchParams.get('status')
