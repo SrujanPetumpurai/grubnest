@@ -7,8 +7,8 @@ const categories = [
   { name: "Sea-Food", img: "/fish.png", bgColor: "#a56800ff" },
   { name: "Milk", img: "/milk.png", bgColor: "#5FA8D3" },
   { name: "Honey", img: "/honey.png", bgColor: "#D98E04" },
-  { name: "Vegetables", img: "/vegetables.png", bgColor: "#6C7613" },
-  { name: "Meat", img: "/meat.png", bgColor: "#700C0C" },
+  { name: "Vegetables", img: "/Vegetables.png", bgColor: "#6C7613" },
+  { name: "Meat", img: "/Meat.png", bgColor: "#700C0C" },
   { name: "Baking", img: "/Baking.png", bgColor: "#700C60" },
   { name: "Cheese", img: "/Cheese.png", bgColor: "#F2B705" },
   { name: "Drinks", img: "/Drinks.png", bgColor: "#0B3471" },
@@ -31,8 +31,8 @@ useEffect(() => {
   return () => window.removeEventListener("resize", update);
 }, []);
 
-  const prev = () => setStart((start - 1 + categories.length) % categories.length);
-  const next = () => setStart((start + 1) % categories.length);
+  const prev = () => setStart(s => (s - 1 + categories.length) % categories.length);
+  const next = () => setStart(s => (s + 1) % categories.length);
 
   const visible = Array.from({ length: visibleCount }, (_, i) =>
     categories[(start + i) % categories.length]
