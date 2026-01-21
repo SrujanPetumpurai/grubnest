@@ -1,4 +1,4 @@
-import CartItem from '@/app/components/CartItem'
+import CartItem from './CartItem'
 
 export interface Item {
   name: string
