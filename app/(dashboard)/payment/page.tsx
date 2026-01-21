@@ -11,9 +11,11 @@ type Order = {
   status: string
 }
 export default function Payment(){
+  return(
   <Suspense>
     <PaymentInner></PaymentInner>
   </Suspense>
+  )
 }
  function PaymentInner() {
   const router = useRouter();
